@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    <h1>Subreddits</h1>
+    <ul>
+      <% for(var sub of subreddits){ %>
+      <li><a href="/r/<%= sub.name %>"><%= sub.name %> </a></li>
+      <% } %>
+    </ul>
+    <a href="/r/new">create a new subreddit</a>
+    <h1>POSTS</h1>
+    <% for(var post of posts){ %>
+    <div>
+      <h3><a href="/posts/<%= post._id %>"><%= post.title %></a></h3>
+      <img src="<%= post.img %>" alt="" />
+    </div>
+    <% } %>
+  </body>
+</html>

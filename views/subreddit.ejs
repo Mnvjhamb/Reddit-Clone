@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  
+    <title><%= subreddit.name %></title>
+  </head>
+  <body style="background-color: #dae0e6; height: 100em;">
+    <header style="background-color: white">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand ml-4">
+          <a class="navbar-item" href="">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX8AAACECAMAAABPuNs7AAAAxlBMVEX/////RQAiIiIAAAASEhIeHh7IyMiIiIgbGxv/OwD/QgAICAj/NgAODg6pqan/OQA4ODiXl5f/LQD5+fnQ0NBUVFQXFxff39//39n/bUzl5eXz8/P/8u//j3n/xbrt7e3Z2dn/qpr/inL/vLD/m4j/sKH/zcRubm62trZGRkZAQED/pJP/eV3/1s7BwcGkpKQuLi7/gmlmZmb/UB54eHj/Vyv/aUb/9fL/6ub/Xzf/Yz7/c1VfX1+BgYH/t6r/jnf/fWL/TRaNXJaoAAARpUlEQVR4nO1d6WKiOhSuRqpgrIqK1datol1d2mqXse1M3/+lLiCEBE5CBBztXL5fMzUE+JKcnJyNk5N4uJyNR73HzvtzzsLzr86jOerPLmN2lmEXXPbNF6zjqqpqmpZzYP1DVavWHztmPxuEfWLa+9ax6tIehqZi/dmcHvop/1H0H0TcU2OA//QP/az/HGZXOo7k3oM1BL3zQz/xv4TxWldlyXeHQH/PFkFKGKnyU9+HhrXJoZ/8X8AIV3cnfzsC1Wo2AgkxVuOy7wDnMimUAOdrnIR9ew3gX2+Hfosfi996DLkfGgHdPPR7/EzMtB11Hh6q35kyujvMNCb/Fpp+f+i3+Wm4XCfad4PAL6+HfqMfhVkcjV8ETc1kkDwmerrs2wOgjw/9Vj8GvfTpt5BtApJ4SKr0c4CvDv1mPwKdVHdeZgD+HPrdfgBeUtL6IVQfDv12R4/9zX4b2QqIwMNe6c/2gAj09rT1+si0IAH2oPeHByCzSPMw+wv0WwOQnYRhXMYVPioQFqHZAUFVyIqhaY1Dv+lxYh3T5oOvems7Iou+HD9Pzt/OJ8/QkKqdQ7/pUcKMqfqojn9lNnn89ie87jl+wR0Fjw74mseK2MIfz7wuXqf3m6odpEXtsX2oWz3zSYagxbU466w4f+ub77SS/xs4T2vPf/fdfgB6cc0ODpf3oxmv40tQAmWnABbnsVVP9bd1uR3+vO6NQc3yHVpYxyuBurtqZ4OLFO4aV/fJ5apf7hy3o59x534aDEG/glaWdqQ60CdCqNXd4YJFBaHlPOltx/HtDtia9FNyuT0IKqveQBuAtQCOMkx9Wc7n8wZqS1+wQtYFCjpLeN/ouHIudOvye4Zi7RfT9wvYt/ad8JH3gaJNfz5fqslecIqcC/JokOi+o/hWT4fsDkuxTgc7vHJ2FnyE/uBK3qVTdgGsjO0F5UWi+yawejqnLwz8zYPJUay0XKJH3gcayOP/VPKKVml7QaGY5L4Jpn8OW0ett+AU131tlH+sO74FkBb/b/ed5/XDl/R9k3gcbUUyvHuTAzB4/N3i+HaAlPh/1O3cRA3rkiOQQPmx1M8T8Oymv/TfXt/6L6JjBT42FSgV/l+/iTTR5Zx98XV/axI/cDqwhl+PSBk7ujNAKvyvqckodcyPf/S1ULV1/bgdHNshOA3+J3jXNwTPp7KwZcgstt/myDID0uCfNWOqPab5RX31GTorJ3K526r+JHaCmJaMr7SRAv9BYaLSreeobBRQi+2in4R/R4l/jL2AMNdqehCkwP84MBd1yhrW3XZfvma6eEgSaa4+Wj3kYvcQWJ6HRgr8B2UBvQGsCm7vjH0vUcyDnWAKGvhlByAd4lJCGvM/IE1oU0xecXu/oXqYJhL/rPFzdxxXLEr68p/Z4VxbUb5MW0tj+722/J0EjZ+7oXpUfrA09B9WGDMaHsj/dxLxr72fhIyfu3XAmqoPjDT4HzMLgN5+Qf5jCm9NrWL7gGvvn5pqHXQD4T/S0FMhLiWkcv7tUOKAtQBB/MfQPm0344v5NT33x/byvD96fJYpDxTEUWmg6djffnmUBtNuIf551nkOrLmuXo05h+rXqbnWwZBDPnav0HHRHg653qbBsNls7+APbwzabd/hLsP/oNvu+jcA7Z/39kTUVJwL2BdLAP+wc5ADq0szQmG5nLzvVCrIOUCIMKCV5cHiA21xG2aoWbxzfyw/nUn4A7uLp8K2vbLaGgUi+G/crJbuHT7OtmMA2/9fv642G6YOW+Pi4oLwX6kPul13EHcQP6r+KCUs3kw47hZEhBPgRrFe1vPtNVuo7L1DCbEev0bdQBXvx7xRRq0IEXJzh8qeQFAMhOonEfw3nxAyFO/2ZXRtTww5/1f71hk07+nyle0U6kZsv1q16u+qKjblU9i/NCIDrX1auC0IN+AFsl8YOQf2QQsRfh2OukzDspJnUEK3AifuPM92ZgkF61Qk4L/dQgZ7gYGKkvwPg/fynnAgMl1i/Gf0NbEkuk2eppu7hSVNsOosmc6oPx2bz/xaElgg0AZedIFFx03w/St1n5wlCr+e9X48Ui5aSAm3R6sTLv9FiEJUO/mQ4b8G0m9d9BkyFxGoqqc6vf3RNX2ze13PnnXZlXfZ7J030CIn2KLsTrWVRUDw6Y0nr9kNxKZD0B24FTeDQ+mi7M3mIP8Xd9D4Wo+wvFWi+R/AF1tYnow4e2V1Q3XQj5cydM7s/yZH0lUFTtKia7AqPdXD72DNHrcV9/3yRgEIZbvhtifzlOW/W+FM4LziDXyA/7kl8K+9W3cF/HOsD+oe8nTv4RUg8sF4/FvCJvzwHkcC+u3ItJAixKc/3LeDLm95UWD5d6SVgZrufwuc6wurk0c4Nm0v4eEb8F6qwEft8w9Q9LFtsxDTWTIC+9apBP0M/xfBnR2kkua/ub2FUnb/zxlxw5obsO1G38uhFNa1NMFSA/hXKq4G/sm8K3klGxWaMOOW6bILtA9vBzT/zO5p6Z02Qs/F8H/t9kfszDcI0j/tMF8wNtyxqu0BoJ9MZIEL8W+gZXE+7HabTXdWN8rUr2W0uhl22/P6ktZWUJ3ukmazYrVvDwbtm+sgoRT/n9QdDOvcNbQumH+iMnsBw3/NHX9KQ7OO5U0yVSr1rnf+eoam5L6qdoKOAtFgB/hX0NMw0OLab2FQJ7ImrbDQwZzUPq6gOhFNF0VWxvv80+sLrfzNZMEqpFH8O/C6ouwPEP1ClTwJQAEk2mtY/o1SM9iAYqfcYgQ9tS2UfAlEqYLGklGN2nlaCPn818i4lBBz+4tbWidIlf+9heWA/AsMEAz/hdvwCfDW1xhXgZ+ofRaRkI9rw+8t0L5RowaA8O9vnSUlqEk9UTLoL/H/aq6x2uFq7P2H7++NQJ9Pwr8RJOyEnv6V69CP/gCU7tw/+dMfiPBv5H0RRPhfkr8BEf4tf8T+jvwZO9ZlDX+DA/T2jJ2wU413eShMegf5owT1SBtPHgFgwoQvgtAw2B+UL0GpRh7//hiikOyzQMxxsfmH91/OFCauNQ0D5ohLL9hT4znVk+y/kEXywmcHzNgi0sk7KvvtwXyhejl4NzLAhaB4c+APT1z+Yf0TjoulElkgpdHvSuNElSTQP31jD4Uz74WIKYJF2+fb+T+hS+HkF5W8+ezx73cAWx+JwSgu/5zzFziB6foE4RZTSrhgcAElOX+BCUFkdvKyrz6IPc2RHp9ed0wADoUzbwG4/M+Jxs4xr5ENKC7/HPsDOCfpKPNw3AjtyNQ20PUJ7A8lYPP138cIb75bUCce+79kM0Wc9kH7P7k/LN+oLuPyz7G/YSguUBeyRrML6jRJ7G9lSF4T8VKoNzlgRohsF7Awt+EtGJd/bwPhyStry6gk459nf4YGgObPSXpnQIeRQjpNEvszLH7m/u6HOPAaKLYGSkYDcdOlPQHk8s8uHwhen3H55/pfquuQDY521YdNFIz8+RP89TyW/8XnH/p1EbDBiFA4oc5SXGlC6NzyP4gesEZC/vn+x2ooMOGLaquHFFA68BGH/DU9boqAyNjh8a8sRb/KwB5AMl488e+LqC3/Q8I/35MM+R934J/vfwfksh+qCImnDVkAgPjhp2iI/O/E/9WCfl3BXkQIzv5d9Aw2Bv+ODP9EX0X8iCJ3i4jLPz/+BIiMffNOWBjSjxo5dwA0HD4ef/H4F8afiPm/luffOW+R1SSoLsDhnx970ErIPzf+SgUiky9/6aqqVnU4a6LRsfNeVX0NHI65818Yf5UW/8aS7u2o+OfGH8KpKbP7x6sJNxbi3HzY9MD9lBujLvQ1iPknx6m8IkK+hGqO/PB0xXwZ6m0Lhv+mhPy5U5Lxz42/FZ1Ldwc3x1IYfyvmn/CZrwmQRy33dSX23wHDPzlgePY7AG6fsfnnbsDplscA7Uw2hOFvYv7PovlkMI9WZ04Z/smBjWev8JvE5p+ffxFWMROAO8rC/Asx/754hmzDYQyj6fSWVOD8xY+uOk3MPzf/qJpieRJuipg4/0jMP5me/OMpi0h7ETE4uPx75k0lH/WE8fnnUpNmdQZuhrA4/07MP8knVBS5pyD+AJ4+QzwwLv9kh+FuAF6D+Pzz80/TcwPzSmBF5Z9G8O/bk+Xq3/kKEKdcm2/v2PLv2+84Frs5KKF245+bfx22scXFPVf7F+dfR/Af6U8JgGwACnwCpvxpIf8L7GEg0REJ+OdngKW1APjTPyL7K4L/E99fyCm/1r6Z06KGeNjL4I7hH+g8/skKMz6gC4gDLgn/fBMEtAOca1z3uoW3bxVglCv9o+pvRPHvnwBAlbLt5CNRQ+NbTCGB7tuzCf9DfwEAIoty2Cfhn19/Bvhk3UbV+GW1+lgDastPd7HxMYji3xcYSiF8RL3ZhqhRA9Dw21dC7X1vMeXtpwKMQkouHbCShH9B/aWwBDKt1YLXYD7A1E68xKFN45VfnSZKwEXxf/JJFkCpFDTqk7h0Stsp+u2D4VRDOgKR8E8F2AUH4GJJ2Z+S8C+oPwZYJ//otoVT7bFlhl+nZs62juLw9Bf0HqXhRvLvT+i8wp6qhrVQMAlNgd2eUZrOqNlPX0LFWLGbTJNJykjEv6D+nhqOzvly8ktVrGub3v3k62ty39vktqnXqh7+sMKGn40aWX8vkn+GNnRHGD2lE7zogaFD8VFrSNoHEox8/unkIVQjN2g/sQG7ifgX1Z9UwwaCV9Otq6epatVOkVSdmlta1U/38rHhS5/o+pPR/NPzM19C6Km+WBRbiAlOZvbajwLdflm8mc/PPkvB7DpqydAjrKDK6mx+elOsBVMGkvEvqr+qroG00/HG+d6LF/BmV4PQX76Ahi+CnqPrr0rw3zCYeWhUypUCS2bAeanQ7RXbc18O+zFpkfXE5D4V7ASMcEJRMv6FWdicLyfPvnqdb7sEh45zL1cTUJG31FFBv9EGVgn+o7OzAqqmTDYXG+14J+HnSci/sACxBkh1KYyFX5CXKD8swz+ruERQKdE+fFGjFu3oT8h/RP15/CvGSfh1IyxtI5PjJ8W/pbjzJ2gJsE234XR0m7Bg/KeLW16kS8m7cyUh/xEliDV950qdo4gyHDLfX/C0FU58rYeLW15OI6pBdhteOjWqe8wFI4RW8AXlj08v1Y6mlOTfBcyCXrAiFMsdVYO4ultS2DgXUdhDzrrtiorIcvx1cAkUEM8xALUvWXqqmzJghNbbvBxeAgpakUMzY9H28k8Lobtu/14Cnii6CHG1ei9ZgKMx0cSFn3Oytj2nUkCw1AmEwTWbdepkiq74RWgGT4GUxxJq2a0/LNmklEuAv70eqPChoJI9jRfbVOvTQNuSPfrDYB/OOjVgZwI/Qs0fAf1BQmjMriRqMMl+f6p7jdCHlHtxUFcsTdKO4FdKRgWhu4W4DFO3aGmeW+VVocrVnFmyqQi6ZxqLpX0D74KlK3GaH6h8HbR9WOe/AjT61j3RE2dWyHx/TcP4sS9YBY1pT8US5Zf2k2DfPvtsLUtKrbWqz2VqYDUX1zVbnb9byZRrstA9W93aJ4bl00L+Cz0s+DeS/P6gyvvQ13nffNdlyM8dX+Hzo4D09zc1FWM917kyR1/jfn/8NTGvOt+6uMwSg+z7myB2+g6D5lh/sAViAZJF9v1ZGLG/v7wbsu8v85B9f/zAAL+WnDb9sYpp/U/Q27sI0o+q4vbR4SHBp9hkgOU+yfT/RWevA4D/HPr9jh4il1VSVPdQ1++fw/5WQDb7pfCwp004k/2S6O1FDc00H2ns4RygAcGMGXiYRTpQdqUfjqLIwMHlOtVdGL/IF6/P4MAURo/shOCHUDLIYKYl+jSYj+p3Jnti4XcaSyBG7EoGF+frpEcBLVbsVgYPYzXRPoxzmbU5IUY49ueVsbqnSt7/L4zUOKcBDWsZ+ylhvN7po2o5OxXmPZM8KWJ2pcsvAhXjXqZypo3+g8wHNu3goMds6u8H0963aAws7vVnUyJGNENsXPbNF2xnf6man/9lx2JZf+yY0zSLBmXg4XI2HvUeO+9O+frnX51Hc9SfZdTvjP8ApNNrt47IJXYAAAAASUVORK5CYII="
+              width="92"
+              height="20"
+            />
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start is-flex is-align-items-center mx-5">
+            <div
+              class="mx-5 p-2"
+              style="
+                width: 13rem;
+                border: 0.4px solid lightgray;
+                border-radius: 5px;
+              "
+            >
+              r/<b><%= subreddit.name %> </b>
+            </div>
+            
+            <input
+              type="text"
+              class="input"
+              style="width: 25rem; border-color: lightgray"
+              placeholder="Search"
+            />
+          </div>
+
+          <div class="navbar-end">
+            <div class="navbar-item mr-5">
+              <span class="material-icons"> account_circle </span>
+              <span>admin123</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div style="width: 100%">
+        <div style="width: 100%; background-color: aqua; height: 230px"></div>
+        <div style="width: 100%; padding-left: 20em" class="is-flex">
+          <div>
+            <img
+              src="https://styles.redditmedia.com/t5_2qhhk/styles/communityIcon_n7ckf4gv4ik11.png?width=256&s=208e562ceb88dafa08fe8f9d1d6e14807db1fdd4"
+              alt=""
+              style="border-radius: 50%; width: 80px; margin-top: -20px"
+            />
+          </div>
+          <div class="ml-4">
+            <h2 class="subtitle is-3">/r/<%= subreddit.name %></h2>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main style="height: 30rem" class="is-flex mt-5 is-justify-content-center">
+      <div style="width: 40em">
+        <div class='is-flex p-2 my-2' style="background-color: white">
+          <img style="height: 40px" src="data:image/png;base64,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" alt="">
+          <input type="text" id='create-post'  placeholder="Create Post" style="background-color: #f4f5f7" class="ml-2 input ">
+            
+        </div>
+        <% for(var post of subreddit.posts) { %>
+        <div
+          class="pr-4 pl-2 mb-4 py-2 is-flex post"
+          style="background-color: white; border: 0.1px solid black"
+        >
+          <div class="mr-2">
+            <div class="is-flex is-flex-direction-column is-align-items-center">
+              <div>
+                <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+                <span class="material-icons"> expand_less </span>
+                </a>
+              </div>
+              <div style="margin-top: -5px"><span>Vote</span></div>
+              <div>
+              <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+                <span class="material-icons"> expand_more </span></div>
+              </a>
+
+            </div>
+          </div>
+          <div>
+            <div>
+              <sub style="color: lightslategrey">posted by test123</sub>
+            </div>
+            <div>
+              <a href="/posts/<%= post._id %>">
+                <h3 class="subtitle is-5 m-1" style="color: rgb(119, 119, 119)">
+                  <%= post.title %>
+                </h3>
+              </a>
+              <p>
+                <%= post.body.slice(0,250) %> <% if(post.body.length >= 250){ %>
+                ... <%}%>
+              </p>
+            </div>
+            <div class="is-flex mt-2">
+              <div class="mr-3 is-flex is-align-items-center">
+                <span style='color: grey' class="material-icons mt-1 mr-1"> comment </span>
+                <a href="">Comments</a>
+              </div>
+              <div class="mr-3 is-flex is-align-items-center">
+                <span style='color: grey' class="material-icons mt-1 mr-1"> share </span>
+                <a href="">Share</a>
+              </div>
+              <div class="mr-3 is-flex is-align-items-center">
+                <span style='color: grey' class="material-icons mt-1 mr-1"> bookmark </span>
+                <a href="">Save</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+    </main>
+
+    <script>
+      document.getElementById('create-post').addEventListener('click', ()=>{
+          window.location.replace('/r/'+"<%= subreddit.name %>"+'/new')
+      })
+    </script>
+  </body>
+
+
+</html>
