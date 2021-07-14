@@ -12,9 +12,10 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/style.css">
     <title><%= post.title %></title>
   </head>
-  <body style="background-color: #dae0e6; height: 80em">
+  <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand ml-4">
         <a class="navbar-item" href="">
@@ -42,7 +43,7 @@
         <div class="navbar-start is-flex is-align-items-center mx-5">
           <input
             type="text"
-            class="input"
+            class="input search"
             style="width: 25rem; border-color: black"
             placeholder="Search"
           />
@@ -56,21 +57,21 @@
         </div>
       </div>
     </nav>
-    <div style="width: 50em;" class="mx-auto mt-5 p-5 is-flex is-flex-direction-column is-justify-content-center">
+    <div style="width: 50em;background-color: white; border: .1px solid grey" class="mx-auto mt-5 p-5 is-flex is-flex-direction-column is-justify-content-center">
       <div
-          class="pr-4 pl-2 mb-4 py-2 is-flex post"
-          style="background-color: white; border: 0.1px solid black"
+          class="pr-4 pl-2 mb-4 py-2  is-flex post"
+          style='background-color: rgba(219, 214, 214, 0.404); border: 2px solid grey'
         >
           <div class="mr-2">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <div>
-                <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+                <a class='vote' href='/r/<%= post.subreddit.name %>/posts/<%= post._id %>/upvote'>
                 <span class="material-icons"> expand_less </span>
                 </a>
               </div>
-              <div style="margin-top: -5px"><span>Vote</span></div>
+              <div style="margin-top: -5px"><span><% if(post.upvotes != 0 && !post.upvotes){ post.upvotes = 0} if(post.downvotes != 0 && !post.downvotes){post.downvotes=0} %><%= post.upvotes - post.downvotes %> </span></div>
               <div>
-              <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+              <a class='vote' href='/r/<%= post.subreddit.name %>/posts/<%= post._id %>/downvote'>
                 <span class="material-icons"> expand_more </span></div>
               </a>
 
@@ -81,7 +82,7 @@
               <sub style="color: lightslategrey">posted by test123</sub>
             </div>
             <div>
-              <a href="/posts/<%= post._id %>">
+              <a href="/r/<%= post.subreddit.name %>/posts/<%= post._id %>">
                 <h3 class="subtitle is-5 m-1" style="color: rgb(119, 119, 119)">
                   <%= post.title %>
                 </h3>
@@ -91,15 +92,15 @@
               </p>
             </div>
             <div class="is-flex mt-2">
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> comment </span>
                 <a href="">Comments</a>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> share </span>
                 <a href="">Share</a>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> bookmark </span>
                 <a href="">Save</a>
               </div>
@@ -107,28 +108,28 @@
           </div>
         </div>
 
-        <div class="p-4" style="border: .5px solid black;">
-          <form action="/posts/<%= post._id %>/comments/new" method="POST">
-            <textarea name="body" id="" cols="10" class='textarea' placeholder="Write Your Thoughts here.." rows="5"></textarea>
+        <div class="p-4" >
+          <form action="/r/<%= post.subreddit.name %>/posts/<%= post._id %>/comments/new" method="POST">
+            <textarea name="body" id="" cols="10" class='textarea search' placeholder="Write Your Thoughts here.." rows="5"></textarea>
             <button class='button mt-2 is-info is-outlined'>Post</button>
           </form>        </div>
 
-          <div class="mt-3 p-3" style="border: .5px solid black; background-color: #dae0e6;">
+          <div class="mt-3 p-3" >
           <% for(var comment of post.comments){ %> 
           <div
           class="pr-4 pl-2 mb-4 py-2 is-flex post"
-          style="background-color: white; "
+          style="background-color: white;  border: 0.1px solid grey; "
         >
           <div class="mr-2">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <div>
-                <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+                <a class='vote' href='/r/<%= post.subreddit.name %>/posts/<%= post._id %>/comments/<%= comment._id %>/upvote'>
                 <span class="material-icons"> expand_less </span>
                 </a>
               </div>
-              <div style="margin-top: -5px"><span>Vote</span></div>
+              <div style="margin-top: -5px"><span><% if(comment.upvotes != 0 && !comment.upvotes){ comment.upvotes = 0} if(comment.downvotes != 0 && !comment.downvotes){comment.downvotes=0} %> <%= comment.upvotes - comment.downvotes %> </span></div>
               <div>
-              <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
+              <a class='vote' href='/r/<%= post.subreddit.name %>/posts/<%= post._id %>/comments/<%= comment._id %>/downvote'>
                 <span class="material-icons"> expand_more </span></div>
               </a>
 
@@ -145,15 +146,15 @@
               </p>
             </div>
             <div class="is-flex mt-2">
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> comment </span>
                 <a href="">Comments</a>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> share </span>
                 <a href="">Share</a>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
+              <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
                 <span style='color: grey' class="material-icons mt-1 mr-1"> bookmark </span>
                 <a href="">Save</a>
               </div>

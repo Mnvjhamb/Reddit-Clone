@@ -12,10 +12,11 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/style.css">
   
     <title><%= subreddit.name %></title>
   </head>
-  <body style="background-color: #dae0e6; height: 100em;">
+  <body>
     <header style="background-color: white">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand ml-4">
@@ -55,7 +56,7 @@
             
             <input
               type="text"
-              class="input"
+              class="input search"
               style="width: 25rem; border-color: lightgray"
               placeholder="Search"
             />
@@ -85,68 +86,83 @@
         </div>
       </div>
     </header>
-    <main style="height: 30rem" class="is-flex mt-5 is-justify-content-center">
-      <div style="width: 40em">
-        <div class='is-flex p-2 my-2' style="background-color: white">
-          <img style="height: 40px" src="data:image/png;base64,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" alt="">
-          <input type="text" id='create-post'  placeholder="Create Post" style="background-color: #f4f5f7" class="ml-2 input ">
-            
-        </div>
-        <% for(var post of subreddit.posts) { %>
-        <div
-          class="pr-4 pl-2 mb-4 py-2 is-flex post"
-          style="background-color: white; border: 0.1px solid black"
-        >
-          <div class="mr-2">
-            <div class="is-flex is-flex-direction-column is-align-items-center">
-              <div>
-                <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
-                <span class="material-icons"> expand_less </span>
+    <div class="is-flex is-justify-content-center">
+      <main class="is-flex mt-5 is-justify-content-center">
+        <div style="width: 40em">
+          <div class='is-flex p-2 my-2' style="background-color: white">
+            <img style="height: 40px" src="data:image/png;base64,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" alt="">
+            <input type="text" id='create-post'  placeholder="Create Post" style="background-color: #f4f5f7" class="ml-2 input ">
+              
+          </div>
+          <% for(var post of subreddit.posts) { %>
+          <div
+            class="pr-4 pl-2 mb-4 py-2 is-flex post"
+            style="background-color: white; border: 0.1px solid black"
+          >
+            <div class="mr-2">
+              <div class="is-flex is-flex-direction-column is-align-items-center">
+                <div>
+                  <a class='vote' href='/r/<%= subreddit.name %>/posts/<%= post._id %>/upvote'>
+                  <span class="material-icons"> expand_less </span>
+                  </a>
+                </div>
+                <div style="margin-top: -5px"><span><% if(post.upvotes != 0 && !post.upvotes){ post.upvotes = 0} if(post.downvotes != 0 && !post.downvotes){post.downvotes=0} %><%= post.upvotes - post.downvotes %> </span></div>
+                <div>
+                <a class='vote' href='/r/<%= subreddit.name %>/posts/<%= post._id %>/downvote'>
+                  <span class="material-icons"> expand_more </span></div>
                 </a>
+  
               </div>
-              <div style="margin-top: -5px"><span>Vote</span></div>
+            </div>
+            <div>
               <div>
-              <a style="color: black" onmouseout="{this.style.color = 'black'} " onmouseover="{this.style.color = 'blue'}">
-                <span class="material-icons"> expand_more </span></div>
-              </a>
-
-            </div>
-          </div>
-          <div>
-            <div>
-              <sub style="color: lightslategrey">posted by test123</sub>
-            </div>
-            <div>
-              <a href="/posts/<%= post._id %>">
-                <h3 class="subtitle is-5 m-1" style="color: rgb(119, 119, 119)">
-                  <%= post.title %>
-                </h3>
-              </a>
-              <p>
-                <%= post.body.slice(0,250) %> <% if(post.body.length >= 250){ %>
-                ... <%}%>
-              </p>
-            </div>
-            <div class="is-flex mt-2">
-              <div class="mr-3 is-flex is-align-items-center">
-                <span style='color: grey' class="material-icons mt-1 mr-1"> comment </span>
-                <a href="">Comments</a>
+                <sub style="color: lightslategrey">posted by test123</sub>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
-                <span style='color: grey' class="material-icons mt-1 mr-1"> share </span>
-                <a href="">Share</a>
+              <div>
+                <a href="/r/<%=subreddit.name %>/posts/<%= post._id %>">
+                  <h3 class="subtitle is-5 m-1" style="color: rgb(119, 119, 119)">
+                    <%= post.title %>
+                  </h3>
+                </a>
+                <p>
+                  <%= post.body.slice(0,250) %> <% if(post.body.length >= 250){ %>
+                  ... <%}%>
+                </p>
               </div>
-              <div class="mr-3 is-flex is-align-items-center">
-                <span style='color: grey' class="material-icons mt-1 mr-1"> bookmark </span>
-                <a href="">Save</a>
+              <div class="is-flex mt-2">
+                <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
+                  <span style='color: grey' class="material-icons mt-1 mr-1"> post </span>
+                  <a href="">posts</a>
+                </div>
+                <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
+                  <span style='color: grey' class="material-icons mt-1 mr-1"> share </span>
+                  <a href="">Share</a>
+                </div>
+                <div class="cmnt p-1 mr-3 is-flex is-align-items-center">
+                  <span style='color: grey' class="material-icons mt-1 mr-1"> bookmark </span>
+                  <a href="">Save</a>
+                </div>
               </div>
             </div>
           </div>
+          <% } %>
         </div>
-        <% } %>
+  
+      </main>
+
+      <div class='mt-5' style="margin-left: 2em;">
+        <div class="description mt-2" style="width: 20em; border:1px solid rgb(119, 119, 119)">
+          <h1 class='p-2 mb-2' style="color: white; background-color: rgb(35, 114, 151);">About Community</h1>
+          <p class=p-2>
+
+            /r/dogs is a place for dog owners of all levels of knowledge, skill, and experience to discuss all topics related to dogs. This subreddit is a great starting point for a lot of information, but you should always verify and expand upon what you've read before putting it to use in your daily life. Advice on this forum is not a substitute for advice from a trained and credentialed professional.
+          </p>
+
+        </div>
       </div>
 
-    </main>
+    </div>
+    
 
     <script>
       document.getElementById('create-post').addEventListener('click', ()=>{
@@ -154,6 +170,4 @@
       })
     </script>
   </body>
-
-
 </html>

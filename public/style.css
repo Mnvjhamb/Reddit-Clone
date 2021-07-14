@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+  background-color: #dae0e6;
+}
+
+.vote {
+  color: black;
+}
+.vote:hover {
+  color: blue;
+}
+.search:hover {
+  border: 1.1px solid black;
+}
+
+.cmnt:hover {
+  background-color: #dae0e6;
+}

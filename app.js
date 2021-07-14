@@ -1,11 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const subredditRoutes = require("./routers/subreddit");
+const postRoutes = require("./routers/posts");
+const commentRoutes = require("./routers/comments");
 
 const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/reddit", {
   useCreateIndex: true,
@@ -13,118 +17,53 @@ mongoose.connect("mongodb://localhost:27017/reddit", {
   useUnifiedTopology: true,
 });
 
-const commentSchema = new mongoose.Schema({
-  body: String,
-  //   author: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-});
+const catchAsync = (func) => {
+  return function (req, res, next) {
+    func(req, res, next).catch(next);
+  };
+};
 
-const Comment = mongoose.model("Comment", commentSchema);
+class ExpressError extends Error {
+  constructor(message, status) {
+    super();
+    this.message = message;
+    this.status = status;
+  }
+}
 
-const postSchema = new mongoose.Schema({
-  title: String,
-  body: String,
-  subreddit: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subreddit",
-  },
-  //   author: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
-});
-
-const subredditSchema = new mongoose.Schema({
-  name: String,
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
-});
-
-const Subreddit = mongoose.model("Subreddit", subredditSchema);
-
-const Post = mongoose.model("Post", postSchema);
-
-app.get("/", async (req, res) => {
-  const posts = await Post.find({});
-  const subreddits = await Subreddit.find({});
-  res.render("home", { posts, subreddits });
-});
-
-app.get("/r/:subreddit/new", (req, res) => {
-  const { subreddit } = req.params;
-  res.render("new", { subreddit });
-});
-
-app.post("/r/:subreddit/new", async (req, res) => {
-  const { subreddit } = req.params;
-  const sub = await Subreddit.findOne({ name: subreddit });
-  const post = await new Post(req.body);
-  post.subreddit = sub;
-  sub.posts.push(post);
-  await sub.save();
-  await post.save();
-  res.redirect("/r/" + subreddit);
-});
-
-app.get("/posts/:id", async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.findById(id).populate("comments");
-  console.log(post);
-  res.render("post", { post });
-});
-
-app.get("/r/new", (req, res) => {
+app.get(
+  "/",
+  catchAsync(async (req, res, next) => {
+    const posts = await Post.find({});
+    const subreddits = await Subreddit.find({});
+    res.render("home", { posts, subreddits });
+  })
+);
+app.get("/r/new", (req, res, next) => {
   res.render("newSubreddit");
 });
 
-app.get("/r/:sub", async (req, res) => {
-  const subreddit = await Subreddit.findOne({ name: req.params.sub }).populate(
-    "posts"
-  );
-  if (subreddit) {
-    res.render("subreddit", { subreddit });
-  } else {
-    res.send("NO SUBREDDIT FOUND");
-  }
+app.post(
+  "/r/new",
+  catchAsync(async (req, res, next) => {
+    const subreddit = new Subreddit(req.body);
+    await subreddit.save();
+    res.redirect("/r/" + subreddit.name);
+  })
+);
+
+app.use("/r/:subreddit/posts/:id/comments", commentRoutes);
+app.use("/r/:subreddit/posts/:id", postRoutes);
+app.use("/r/:subreddit", subredditRoutes);
+
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page not found", 404));
 });
 
-app.post("/r/new", async (req, res) => {
-  const subreddit = new Subreddit(req.body);
-  await subreddit.save();
-  res.redirect("/r/" + subreddit.name);
-});
-
-app.get("/posts/:id/delete", async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.findByIdAndDelete(id);
-  for (var comment of post.comments) {
-    await Comment.findByIdAndDelete(comment._id);
-  }
-  res.redirect("/");
-});
-
-app.post("/posts/:id/comments/new", async (req, res) => {
-  console.log(req.body);
-  const { id } = req.params;
-  const comment = new Comment(req.body);
-  await comment.save();
-  const post = await Post.findById(id).populate("comments");
-  post.comments.push(comment);
-  await post.save();
-  console.log(post);
-  res.redirect("/posts/" + id);
+app.use((err, req, res, next) => {
+  const { status = 500, message = "SOMTHING WENT WRONg" } = err;
+  console.log(err);
+  res.status(status).send(message);
 });
 
 app.listen("3000", () => {
