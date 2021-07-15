@@ -50,10 +50,24 @@
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item mr-5">
-            <span class="material-icons"> account_circle </span>
-            <span>admin123</span>
+          <% if(!currentUser){ %> 
+          <div class="navbar-item mr-1">
+            <!-- <span class="material-icons"> account_circle </span>
+            <span>admin123</span> -->
+
+            <a href="/login" style="color: black;">Login</a>
           </div>
+          <div class="navbar-item mr-5">
+            <!-- <span class="material-icons"> account_circle </span>
+            <span>admin123</span> -->
+
+            <a href="/register" style="color: black;">Register</a>
+          </div>
+          <% } else {%> 
+            <div class="navbar-item mr-5">
+              <a href="">Logout</a>
+            </div>
+            <% } %> 
         </div>
       </div>
     </nav>

@@ -8,6 +8,14 @@ const catchAsync = (func) => {
   };
 };
 
+const isLoggedIn = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
 router.get(
   "/",
   catchAsync(async (req, res, next) => {
@@ -22,13 +30,14 @@ router.get(
   })
 );
 
-router.get("/new", (req, res, next) => {
+router.get("/new", isLoggedIn, (req, res, next) => {
   const { subreddit } = req.params;
   res.render("new", { subreddit });
 });
 
 router.post(
   "/new",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { subreddit } = req.params;
     const sub = await Subreddit.findOne({ name: subreddit });

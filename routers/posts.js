@@ -9,6 +9,14 @@ const catchAsync = (func) => {
   };
 };
 
+const isLoggedIn = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
 router.get(
   "/",
   catchAsync(async (req, res, next) => {
@@ -23,6 +31,7 @@ router.get(
 
 router.get(
   "/upvote",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     console.log(post);
@@ -37,6 +46,7 @@ router.get(
 );
 router.get(
   "/downvote",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     if (post.downvotes >= 0 || post.downvotes) {
@@ -51,6 +61,7 @@ router.get(
 
 router.get(
   "/delete",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndDelete(id);
