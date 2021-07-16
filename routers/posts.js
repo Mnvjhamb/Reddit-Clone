@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const mongoose = require("mongoose");
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 const catchAsync = (func) => {
   return function (req, res, next) {
@@ -13,6 +14,8 @@ const isLoggedIn = (req, res, next) => {
   if (req.user) {
     next();
   } else {
+    req.session.returnTo = req.originalUrl;
+    req.flash("error", "Please Login");
     res.redirect("/login");
   }
 };
@@ -68,7 +71,8 @@ router.get(
     for (var comment of post.comments) {
       await Comment.findByIdAndDelete(comment._id);
     }
-    res.redirect("/");
+    req.flash("success", "Post Deleted Successfully");
+    res.redirect("/r/" + req.params.subreddit);
   })
 );
 

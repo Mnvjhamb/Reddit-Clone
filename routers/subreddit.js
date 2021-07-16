@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Subreddit = require("../models/subreddit");
+const Post = require("../models/post");
 
 const catchAsync = (func) => {
   return function (req, res, next) {
@@ -12,6 +13,8 @@ const isLoggedIn = (req, res, next) => {
   if (req.user) {
     next();
   } else {
+    req.session.returnTo = req.originalUrl;
+    req.flash("error", "Please Login");
     res.redirect("/login");
   }
 };
@@ -48,6 +51,7 @@ router.post(
     sub.posts.push(post);
     await sub.save();
     await post.save();
+    req.flash("success", "Post Added Successfully");
     res.redirect("/r/" + subreddit);
   })
 );

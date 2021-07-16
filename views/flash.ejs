@@ -1,0 +1,14 @@
+<% if(success && success.length){ %>
+<div class="mb-3 is-flex is-justify-content-center">
+  <article class="message is-primary" style="width: 100%">
+    <div class="message-body" style="width: 100%"><%= success %></div>
+  </article>
+</div>
+
+<% } %> <% if(error && error.length){ %>
+<div class="mb-3 is-flex is-justify-content-center">
+  <article class="message is-danger" style="width: 100%">
+    <div class="message-body" style="width: 100%"><%= error %></div>
+  </article>
+</div>
+<% } %>

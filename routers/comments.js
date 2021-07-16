@@ -13,6 +13,8 @@ const isLoggedIn = (req, res, next) => {
   if (req.user) {
     next();
   } else {
+    req.session.returnTo = req.originalUrl;
+    req.flash("error", "Please Login");
     res.redirect("/login");
   }
 };
@@ -31,6 +33,7 @@ router.post(
     post.comments.push(comment);
     await post.save();
     console.log(post);
+    req.flash("success", "Comment Added");
     res.redirect("/r/" + req.params.subreddit + "/posts/" + req.params.id);
   })
 );
